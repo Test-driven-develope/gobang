@@ -10,7 +10,6 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.io.ByteArrayInputStream
 import java.io.InputStream
-import java.nio.charset.StandardCharsets
 
 
 internal class AppKtTest {
@@ -24,21 +23,20 @@ internal class AppKtTest {
 
     @Test
     fun should_print_chessboard_when_app_init_run() {
-        val str = """
-  欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
-        0 1 2 3 4 5 6 7 8 9
-      0 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┐
-      1 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      2 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      3 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      4 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      5 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      6 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      7 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      8 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
-      9 └─┴─┴─┴─┴─┴─┴─┴─┴─┘
-  请黑子先输入行列坐标(如3,4):
-  输入的坐标无效，请输入正确的行列坐标(如3,4):""".trimIndent()
+        val str = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+  0 1 2 3 4 5 6 7 8 9
+0 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┐
+1 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+2 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+3 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+4 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+5 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+6 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+7 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+8 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+9 └─┴─┴─┴─┴─┴─┴─┴─┴─┘
+请黑子先输入行列坐标(如3,4):
+输入的坐标无效，请输入正确的行列坐标(如3,4):""".trimIndent()
         main()
         Assertions.assertEquals(str, outputStreamCaptor.toString().trim())
     }

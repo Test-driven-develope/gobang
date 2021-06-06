@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'application'
 }
 
 group 'org.eason'
@@ -18,4 +19,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'AppKt'
+        )
+    }
+}
+
+application {
+    mainClass = 'AppKt'
 }

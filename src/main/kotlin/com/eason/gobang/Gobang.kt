@@ -1,8 +1,6 @@
 package com.eason.gobang
 
-class Gobang(row: Int = 10, column: Int = 10) {
-    private val row = row
-    private val column = column
+class Gobang(private val row: Int = 10, private val column: Int = 10) {
     private val points = mutableSetOf<Point>()
 
     init {
@@ -15,14 +13,22 @@ class Gobang(row: Int = 10, column: Int = 10) {
 
     fun getChessBoard(): String {
         val rowHeader = (0 until column).toList().joinToString(prefix = "  ", separator = " ")
-        val rowsContent = points.groupBy { it.rowIndex }.toList()
-            .map {
-                "${it.first} ${
-                    it.second.map { point: Point -> point.getPointName() }.joinToString(separator = "")
-                }"
-            }
-            .joinToString(separator = "\n")
-        return """${rowHeader}
-${rowsContent}""".trimIndent()
+        val rowsContent = points.groupBy { it.rowIndex }.toList().joinToString(separator = "\n") {
+            "${it.first} ${
+                it.second.joinToString(separator = "") { point: Point -> point.getPointName() }
+            }"
+        }
+        return """$rowHeader
+$rowsContent""".trimIndent()
+    }
+
+    fun setChessPieces(rowIndex: Int, columnIndex: Int) {
+        val chessPiece : ChessPiece = generateCurrentInputChessPiece(rowIndex, columnIndex);
+        val point  = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
+        point.chessPiece = chessPiece
+    }
+
+    private fun generateCurrentInputChessPiece(rowIndex: Int, columnIndex: Int): ChessPiece {
+        return ChessPiece(rowIndex, columnIndex, "Black")
     }
 }

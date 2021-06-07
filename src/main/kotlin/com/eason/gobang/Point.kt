@@ -1,11 +1,14 @@
 package com.eason.gobang
 
-class Point(rowIndex:Int, columnIndex:Int) {
-    val rowIndex = rowIndex
-    val columnIndex = columnIndex
+class Point(val rowIndex: Int, val columnIndex: Int) {
+    var chessPiece: ChessPiece ?= null
 
     fun getPointName(): String {
-        if ( rowIndex == 0 && columnIndex in 1 until 9) {
+        if (this.chessPiece != null) {
+            return "${chessPiece!!.getPrintValue()}─"
+        }
+
+        if (rowIndex == 0 && columnIndex in 1 until 9) {
             return "┬─"
         }
 

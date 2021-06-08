@@ -67,6 +67,13 @@ $rowsContent""".trimIndent()
             return true
         }
 
+        val bevelPointsRowIndexes = allPointWithSameInputChessPiece.filter { point -> point.rowIndex + point.columnIndex == currentPoint.rowIndex + currentPoint.columnIndex }
+            .map { it.rowIndex }.sorted()
+
+        if (isHaveSerialFivePoints(bevelPointsRowIndexes)) {
+            return true
+        }
+
         return false
     }
 

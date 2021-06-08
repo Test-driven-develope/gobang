@@ -168,4 +168,34 @@ internal class GobangTest {
         val isWin = gobang.isWin()
         Assertions.assertFalse(isWin)
     }
+
+    @Test
+    fun should_return_win_when_black_chess_piece_bevel_equals_5() {
+        gobang.setChessPieces(6, 1)
+        gobang.setChessPieces(7, 2)
+        gobang.setChessPieces(5, 2)
+        gobang.setChessPieces(6, 3)
+        gobang.setChessPieces(4, 3)
+        gobang.setChessPieces(5, 4)
+        gobang.setChessPieces(3, 4)
+        gobang.setChessPieces(4, 5)
+        gobang.setChessPieces(2, 5)
+        val isWin = gobang.isWin()
+        Assertions.assertTrue(isWin)
+    }
+
+    @Test
+    fun should_return_no_win_when_black_chess_piece_bevel_equals_5() {
+        gobang.setChessPieces(6, 1)
+        gobang.setChessPieces(7, 2)
+        gobang.setChessPieces(5, 2)
+        gobang.setChessPieces(6, 3)
+        gobang.setChessPieces(4, 3)
+        gobang.setChessPieces(5, 4)
+        gobang.setChessPieces(3, 4)
+        gobang.setChessPieces(4, 5)
+        gobang.setChessPieces(1, 6)
+        val isWin = gobang.isWin()
+        Assertions.assertFalse(isWin)
+    }
 }

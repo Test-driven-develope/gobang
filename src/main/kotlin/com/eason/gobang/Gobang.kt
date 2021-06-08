@@ -23,12 +23,15 @@ $rowsContent""".trimIndent()
     }
 
     fun setChessPieces(rowIndex: Int, columnIndex: Int) {
-        val chessPiece : ChessPiece = generateCurrentInputChessPiece(rowIndex, columnIndex);
+        val chessPiece : ChessPiece = getNeedInputChessPiece()
         val point  = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
         point.chessPiece = chessPiece
     }
 
-    private fun generateCurrentInputChessPiece(rowIndex: Int, columnIndex: Int): ChessPiece {
-        return ChessPiece(rowIndex, columnIndex, "Black")
+    fun getNeedInputChessPiece(): ChessPiece {
+        val chessPieces = points.filter { point -> point.chessPiece != null }.map { point: Point -> point.chessPiece }
+        val blackPiecesCount = chessPieces.filter{piece -> piece == ChessPiece.BlACK}.count()
+        val whitePiecesCount = chessPieces.filter { piece -> piece == ChessPiece.WHITE }.count()
+        return if (blackPiecesCount == whitePiecesCount) ChessPiece.BlACK else ChessPiece.WHITE
     }
 }

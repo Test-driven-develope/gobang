@@ -5,7 +5,7 @@ class Point(val rowIndex: Int, val columnIndex: Int) {
 
     fun getPointName(): String {
         if (this.chessPiece != null) {
-            return "${chessPiece!!.getPrintValue()}─"
+            return "${chessPiece!!.value}─"
         }
 
         if (rowIndex == 0 && columnIndex in 1 until 9) {

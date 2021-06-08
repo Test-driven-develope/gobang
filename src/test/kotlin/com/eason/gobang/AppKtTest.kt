@@ -49,7 +49,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(false, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -60,7 +60,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(true, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -71,7 +71,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(false, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -82,7 +82,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(false, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -93,7 +93,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(true, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -104,7 +104,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(true, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
     @Test
@@ -115,7 +115,7 @@ internal class AppKtTest {
         System.setIn(stream)
         val result = verifyCoordinate(coordinate)
         Assertions.assertEquals(true, result)
-        System.setIn(stdin);
+        System.setIn(stdin)
     }
 
 }

@@ -2,8 +2,7 @@ package com.eason.gobang
 
 class Gobang(private val row: Int = 10, private val column: Int = 10) {
     private val points = mutableSetOf<Point>()
-    lateinit var currentChessPiece: ChessPiece
-    var currentPoint: Point? = null
+    private lateinit var currentPoint: Point
 
     init {
         for (rowIndex in 0 until row) {
@@ -25,9 +24,9 @@ $rowsContent""".trimIndent()
     }
 
     fun setChessPieces(rowIndex: Int, columnIndex: Int) {
-        currentChessPiece = getNeedInputChessPiece()
+        val currentChessPiece = getNeedInputChessPiece()
         currentPoint = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
-        currentPoint!!.setChessPiece(currentChessPiece)
+        currentPoint.setChessPiece(currentChessPiece)
     }
 
     fun getNeedInputChessPiece(): ChessPiece {
@@ -38,13 +37,13 @@ $rowsContent""".trimIndent()
     }
 
     fun isWin(): Boolean {
-        var allPointWithSameInputChessPiece =
-            points.filter { point -> point.getChessPiece() != null && point.getChessPiece() == currentChessPiece }
+        val allPointWithSameInputChessPiece =
+            points.filter { point -> point.getChessPiece() != null && point.getChessPiece() == currentPoint.getChessPiece() }
         if (allPointWithSameInputChessPiece.count() < 5) {
             return false
         }
         val allAcrossPointsColumnIndexes =
-            allPointWithSameInputChessPiece.filter { point -> point.rowIndex == currentPoint!!.rowIndex }
+            allPointWithSameInputChessPiece.filter { point -> point.rowIndex == currentPoint.rowIndex }
                 .map { it.columnIndex }.sorted()
 
         if (isHaveSerialFivePoints(allAcrossPointsColumnIndexes)) {
@@ -52,7 +51,7 @@ $rowsContent""".trimIndent()
         }
 
         val allVerticalPointsColumnIndexes =
-            allPointWithSameInputChessPiece.filter { point -> point.columnIndex == currentPoint!!.columnIndex }
+            allPointWithSameInputChessPiece.filter { point -> point.columnIndex == currentPoint.columnIndex }
                 .map { it.rowIndex }.sorted()
 
         if (isHaveSerialFivePoints(allVerticalPointsColumnIndexes)) {

@@ -206,4 +206,49 @@ internal class GobangTest {
         val isWin = gobang.isWin()
         Assertions.assertFalse(isWin)
     }
+
+    @Test
+    fun should_over_when_black_win() {
+        gobang.setChessPieces(6, 1)
+        gobang.setChessPieces(7, 2)
+        gobang.setChessPieces(5, 2)
+        gobang.setChessPieces(6, 3)
+        gobang.setChessPieces(4, 3)
+        gobang.setChessPieces(5, 4)
+        gobang.setChessPieces(3, 4)
+        gobang.setChessPieces(4, 5)
+        gobang.setChessPieces(2, 5)
+        val isOver = gobang.isOver()
+        Assertions.assertTrue(isOver)
+    }
+
+    @Test
+    fun should_over_when_no_left_points() {
+        for (rowIndex in 0 until 10) {
+            for (columnIndex in 0 until 3) {
+                gobang.setChessPieces(rowIndex, columnIndex)
+            }
+        }
+
+        for (rowIndex in 0 until 10) {
+            gobang.setChessPieces(rowIndex, 3)
+        }
+
+        for (rowIndex in 9 downTo 0) {
+            for (columnIndex in 4 until 7) {
+                gobang.setChessPieces(rowIndex, columnIndex)
+            }
+        }
+
+        for (rowIndex in 9 downTo 0) {
+            for (columnIndex in 7 until 10) {
+                gobang.setChessPieces(rowIndex, columnIndex)
+            }
+        }
+        println(gobang.getChessBoard())
+        val isOver = gobang.isOver()
+        Assertions.assertTrue(isOver)
+    }
+
 }
+

@@ -22,7 +22,7 @@ class Gobang(private val row: Int = 10, private val column: Int = 10) {
         return rowHeader + "\n" + rowsContent
     }
 
-    fun setChessPieces(rowIndex: Int, columnIndex: Int):Boolean {
+    fun setChessPieces(rowIndex: Int, columnIndex: Int): Boolean {
         currentPoint = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
         return currentPoint.setChessPiece(getNeedInputChessPiece())
     }
@@ -77,7 +77,7 @@ class Gobang(private val row: Int = 10, private val column: Int = 10) {
         val allIndexes = indexes.minOrNull()!!.rangeTo(indexes.maxOrNull()!!)
         val leftPoints = allIndexes.subtract(indexes)
 
-        if (allIndexes.count() == 5 && leftPoints.count() == 0) {
+        if (allIndexes.count() >= 5 && leftPoints.count() == 0) {
             return true
         }
 
@@ -91,5 +91,9 @@ class Gobang(private val row: Int = 10, private val column: Int = 10) {
             }
         }
         return false
+    }
+
+    fun isOver(): Boolean {
+        return isWin() || points.filter { point -> point.getChessPiece() != null }.count() == row * column
     }
 }

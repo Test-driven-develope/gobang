@@ -1,11 +1,19 @@
 package com.eason.gobang
 
 class Point(val rowIndex: Int, val columnIndex: Int) {
-    var chessPiece: ChessPiece ?= null
+    private lateinit var chessPiece: ChessPiece
+
+    fun setChessPiece(piece: ChessPiece) {
+        chessPiece = piece
+    }
+
+    fun getChessPiece(): ChessPiece? {
+        return if (this::chessPiece.isInitialized) chessPiece else null
+    }
 
     fun getPointName(): String {
-        if (this.chessPiece != null) {
-            return "${chessPiece!!.value}─"
+        if (this::chessPiece.isInitialized) {
+            return "${chessPiece.value}─"
         }
 
         return when {

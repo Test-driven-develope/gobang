@@ -2,7 +2,7 @@ package com.eason.gobang
 
 class Gobang(private val row: Int = 10, private val column: Int = 10) {
     private val points = mutableSetOf<Point>()
-    var currentChessPiece: ChessPiece? = null
+    lateinit var currentChessPiece: ChessPiece
     var currentPoint: Point? = null
 
     init {
@@ -27,11 +27,11 @@ $rowsContent""".trimIndent()
     fun setChessPieces(rowIndex: Int, columnIndex: Int) {
         currentChessPiece = getNeedInputChessPiece()
         currentPoint = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
-        currentPoint!!.chessPiece = currentChessPiece
+        currentPoint!!.setChessPiece(currentChessPiece)
     }
 
     fun getNeedInputChessPiece(): ChessPiece {
-        val chessPieces = points.filter { point -> point.chessPiece != null }.map { point: Point -> point.chessPiece }
+        val chessPieces = points.filter { point -> point.getChessPiece() != null }.map { point: Point -> point.getChessPiece() }
         val blackPiecesCount = chessPieces.filter { piece -> piece == ChessPiece.BlACK }.count()
         val whitePiecesCount = chessPieces.filter { piece -> piece == ChessPiece.WHITE }.count()
         return if (blackPiecesCount == whitePiecesCount) ChessPiece.BlACK else ChessPiece.WHITE
@@ -39,7 +39,7 @@ $rowsContent""".trimIndent()
 
     fun isWin(): Boolean {
         var allPointWithSameInputChessPiece =
-            points.filter { point -> point.chessPiece != null && point.chessPiece == currentChessPiece }
+            points.filter { point -> point.getChessPiece() != null && point.getChessPiece() == currentChessPiece }
         if (allPointWithSameInputChessPiece.count() < 5) {
             return false
         }

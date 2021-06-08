@@ -105,6 +105,7 @@ internal class GobangTest {
         gobang.setChessPieces(4, 4)
         gobang.setChessPieces(6, 5)
         val isWin = gobang.isWin()
+        println(gobang.getChessBoard())
         Assertions.assertTrue(isWin)
     }
 

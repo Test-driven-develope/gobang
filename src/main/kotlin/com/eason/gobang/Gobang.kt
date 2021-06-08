@@ -30,7 +30,8 @@ $rowsContent""".trimIndent()
     }
 
     fun getNeedInputChessPiece(): ChessPiece {
-        val chessPieces = points.filter { point -> point.getChessPiece() != null }.map { point: Point -> point.getChessPiece() }
+        val chessPieces =
+            points.filter { point -> point.getChessPiece() != null }.map { point: Point -> point.getChessPiece() }
         val blackPiecesCount = chessPieces.filter { piece -> piece == ChessPiece.BlACK }.count()
         val whitePiecesCount = chessPieces.filter { piece -> piece == ChessPiece.WHITE }.count()
         return if (blackPiecesCount == whitePiecesCount) ChessPiece.BlACK else ChessPiece.WHITE
@@ -50,11 +51,19 @@ $rowsContent""".trimIndent()
             return true
         }
 
-        val allVerticalPointsColumnIndexes =
+        val allVerticalPointsRowIndexes =
             allPointWithSameInputChessPiece.filter { point -> point.columnIndex == currentPoint.columnIndex }
                 .map { it.rowIndex }.sorted()
 
-        if (isHaveSerialFivePoints(allVerticalPointsColumnIndexes)) {
+        if (isHaveSerialFivePoints(allVerticalPointsRowIndexes)) {
+            return true
+        }
+
+        val positiveRakePointsRowIndexes =
+            allPointWithSameInputChessPiece.filter { point -> point.rowIndex - point.columnIndex == currentPoint.rowIndex - currentPoint.columnIndex }
+                .map { it.rowIndex }.sorted()
+
+        if (isHaveSerialFivePoints(positiveRakePointsRowIndexes)) {
             return true
         }
 

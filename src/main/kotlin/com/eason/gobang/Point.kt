@@ -3,8 +3,12 @@ package com.eason.gobang
 class Point(val rowIndex: Int, val columnIndex: Int) {
     private lateinit var chessPiece: ChessPiece
 
-    fun setChessPiece(piece: ChessPiece) {
+    fun setChessPiece(piece: ChessPiece):Boolean {
+        if (this::chessPiece.isInitialized) {
+            return false
+        }
         chessPiece = piece
+        return true
     }
 
     fun getChessPiece(): ChessPiece? {

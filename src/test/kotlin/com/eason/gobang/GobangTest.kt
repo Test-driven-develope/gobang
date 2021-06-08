@@ -14,9 +14,18 @@ internal class GobangTest {
 
     @Test
     fun should_return_need_input_white_chess_piece_when_input_white_piece() {
-        gobang.setChessPieces(4, 5)
+        val result = gobang.setChessPieces(4, 5)
         val chessPiece: ChessPiece = gobang.getNeedInputChessPiece()
+        Assertions.assertTrue(result)
         Assertions.assertEquals(chessPiece, ChessPiece.WHITE)
+    }
+
+    @Test
+    fun should_return_false_when_location_existing_piece() {
+        val result1 = gobang.setChessPieces(4, 5)
+        val result2 = gobang.setChessPieces(4, 5)
+        Assertions.assertTrue(result1)
+        Assertions.assertFalse(result2)
     }
 
     @Test
@@ -105,7 +114,6 @@ internal class GobangTest {
         gobang.setChessPieces(4, 4)
         gobang.setChessPieces(6, 5)
         val isWin = gobang.isWin()
-        println(gobang.getChessBoard())
         Assertions.assertTrue(isWin)
     }
 

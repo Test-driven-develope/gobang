@@ -19,14 +19,12 @@ class Gobang(private val row: Int = 10, private val column: Int = 10) {
                 it.second.joinToString(separator = "") { point: Point -> point.getPointName() }
             }"
         }
-        return """$rowHeader
-$rowsContent""".trimIndent()
+        return rowHeader + "\n" + rowsContent
     }
 
-    fun setChessPieces(rowIndex: Int, columnIndex: Int) {
-        val currentChessPiece = getNeedInputChessPiece()
+    fun setChessPieces(rowIndex: Int, columnIndex: Int):Boolean {
         currentPoint = points.first { point -> point.rowIndex == rowIndex && point.columnIndex == columnIndex }
-        currentPoint.setChessPiece(currentChessPiece)
+        return currentPoint.setChessPiece(getNeedInputChessPiece())
     }
 
     fun getNeedInputChessPiece(): ChessPiece {
@@ -38,43 +36,37 @@ $rowsContent""".trimIndent()
     }
 
     fun isWin(): Boolean {
-        val allPointWithSameInputChessPiece =
+        val sameChessPiecePoints =
             points.filter { point -> point.getChessPiece() != null && point.getChessPiece() == currentPoint.getChessPiece() }
-        if (allPointWithSameInputChessPiece.count() < 5) {
-            return false
+
+        return when {
+            sameChessPiecePoints.count() < 5 -> false
+            isHaveSerialFivePoints(getAcrossPointsColumnIndexes(sameChessPiecePoints)) -> true
+            isHaveSerialFivePoints(getVerticalPointsRowIndexes(sameChessPiecePoints)) -> true
+            isHaveSerialFivePoints(getPositiveRakePointsRowIndexes(sameChessPiecePoints)) -> true
+            isHaveSerialFivePoints(getBevelPointsRowIndexes(sameChessPiecePoints)) -> true
+            else -> false
         }
-        val allAcrossPointsColumnIndexes =
-            allPointWithSameInputChessPiece.filter { point -> point.rowIndex == currentPoint.rowIndex }
-                .map { it.columnIndex }.sorted()
+    }
 
-        if (isHaveSerialFivePoints(allAcrossPointsColumnIndexes)) {
-            return true
-        }
+    private fun getAcrossPointsColumnIndexes(points: List<Point>): List<Int> {
+        return points.filter { point -> point.rowIndex == currentPoint.rowIndex }
+            .map { it.columnIndex }.sorted()
+    }
 
-        val allVerticalPointsRowIndexes =
-            allPointWithSameInputChessPiece.filter { point -> point.columnIndex == currentPoint.columnIndex }
-                .map { it.rowIndex }.sorted()
-
-        if (isHaveSerialFivePoints(allVerticalPointsRowIndexes)) {
-            return true
-        }
-
-        val positiveRakePointsRowIndexes =
-            allPointWithSameInputChessPiece.filter { point -> point.rowIndex - point.columnIndex == currentPoint.rowIndex - currentPoint.columnIndex }
-                .map { it.rowIndex }.sorted()
-
-        if (isHaveSerialFivePoints(positiveRakePointsRowIndexes)) {
-            return true
-        }
-
-        val bevelPointsRowIndexes = allPointWithSameInputChessPiece.filter { point -> point.rowIndex + point.columnIndex == currentPoint.rowIndex + currentPoint.columnIndex }
+    private fun getVerticalPointsRowIndexes(points: List<Point>): List<Int> {
+        return points.filter { point -> point.columnIndex == currentPoint.columnIndex }
             .map { it.rowIndex }.sorted()
+    }
 
-        if (isHaveSerialFivePoints(bevelPointsRowIndexes)) {
-            return true
-        }
+    private fun getPositiveRakePointsRowIndexes(points: List<Point>): List<Int> {
+        return points.filter { point -> point.rowIndex - point.columnIndex == currentPoint.rowIndex - currentPoint.columnIndex }
+            .map { it.rowIndex }.sorted()
+    }
 
-        return false
+    private fun getBevelPointsRowIndexes(points: List<Point>): List<Int> {
+        return points.filter { point -> point.rowIndex + point.columnIndex == currentPoint.rowIndex + currentPoint.columnIndex }
+            .map { it.rowIndex }.sorted()
     }
 
     private fun isHaveSerialFivePoints(indexes: List<Int>): Boolean {

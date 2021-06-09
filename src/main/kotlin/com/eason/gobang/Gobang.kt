@@ -2,7 +2,7 @@ package com.eason.gobang
 
 class Gobang(private val row: Int = 10, private val column: Int = 10) {
     private val points = mutableSetOf<Point>()
-    private lateinit var currentPoint: Point
+    lateinit var currentPoint: Point
 
     init {
         for (rowIndex in 0 until row) {

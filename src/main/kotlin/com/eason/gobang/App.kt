@@ -1,3 +1,4 @@
+import com.eason.gobang.ChessPiece
 import com.eason.gobang.Gobang
 import java.lang.Exception
 
@@ -5,12 +6,25 @@ fun main() {
     println("欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):")
     val gobang = Gobang(10, 10)
     println(gobang.getChessBoard())
-    println("请黑子先输入行列坐标(如3,4):")
-    val enteredString = readLine()
-    if (!enteredString.isNullOrBlank() && verifyCoordinate(enteredString)) {
-        println("输入的行列坐标为：${enteredString}")
+    startGame(gobang)
+}
+
+fun startGame(gobang: Gobang) {
+    while (!gobang.isOver()) {
+        val color = if (gobang.getNeedInputChessPiece() == ChessPiece.BlACK) "黑子(◉)" else "白子(◯)"
+        println("请${color}输入行列坐标(如3,4):")
+        val enteredString = readLine()
+        if (!enteredString.isNullOrBlank() && verifyCoordinate(enteredString)) {
+            gobang.setChessPieces(enteredString[0].toInt(), enteredString[1].toInt())
+            println(gobang.getChessBoard())
+        } else {
+            println("输入的坐标无效，请${color}重新输入正确的行列坐标(如3,4):")
+        }
+    }
+    if (gobang.isWin()) {
+        println("\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5游戏结束，恭喜${if (gobang.currentPoint.getChessPiece() == ChessPiece.BlACK) "黑子(◉)" else "白子(◯)"}获胜!\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5\uD83D\uDCA5")
     } else {
-        println("输入的坐标无效，请输入正确的行列坐标(如3,4):")
+        println("棋盘已经沾满，未分胜负，请重新开始一局吧!")
     }
 }
 

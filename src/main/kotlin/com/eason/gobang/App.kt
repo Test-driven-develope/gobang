@@ -1,6 +1,7 @@
-import com.eason.gobang.ChessPiece
-import com.eason.gobang.Gobang
+package com.eason.gobang
+
 import java.lang.Exception
+import java.util.*
 
 fun main() {
     println("欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):")
@@ -12,10 +13,11 @@ fun main() {
 fun startGame(gobang: Gobang) {
     while (!gobang.isOver()) {
         val color = if (gobang.getNeedInputChessPiece() == ChessPiece.BlACK) "黑子(◉)" else "白子(◯)"
+        val reader = Scanner(System.`in`)
         println("请${color}输入行列坐标(如3,4):")
-        val enteredString = readLine()
-        if (!enteredString.isNullOrBlank() && verifyCoordinate(enteredString)) {
-            gobang.setChessPieces(enteredString[0].toInt(), enteredString[1].toInt())
+        val coordinate = reader.nextLine()
+        if (!coordinate.isNullOrBlank() && verifyCoordinate(coordinate)) {
+            gobang.setChessPieces(coordinate.split(",")[0].toInt(), coordinate.split(",")[1].toInt())
             println(gobang.getChessBoard())
         } else {
             println("输入的坐标无效，请${color}重新输入正确的行列坐标(如3,4):")

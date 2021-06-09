@@ -1,13 +1,9 @@
 package com.eason.gobang
 
-import main
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
-import org.mockito.Mockito
 import org.mockito.Mockito.*
-import startGame
-import verifyCoordinate
 import java.io.ByteArrayOutputStream
 
 import java.io.PrintStream

@@ -3,7 +3,7 @@ package com.eason.gobang
 class Point(val rowIndex: Int, val columnIndex: Int) {
     private lateinit var chessPiece: ChessPiece
 
-    fun setChessPiece(piece: ChessPiece):Boolean {
+    fun setChessPiece(piece: ChessPiece): Boolean {
         if (this::chessPiece.isInitialized) {
             return false
         }
@@ -17,7 +17,7 @@ class Point(val rowIndex: Int, val columnIndex: Int) {
 
     fun getPointName(): String {
         if (this::chessPiece.isInitialized) {
-            return "${chessPiece.value}─"
+            return "${chessPiece.value}${if (columnIndex == 9) "" else "─"}"
         }
 
         return when {

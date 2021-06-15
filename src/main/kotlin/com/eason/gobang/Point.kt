@@ -1,7 +1,15 @@
 package com.eason.gobang
 
-class Point(val rowIndex:Int, val columnIndex:Int) {
+class Point(val rowIndex: Int, val columnIndex: Int) {
+
+    private lateinit var chessPiece: ChessPiece
+
+
     fun getPointName(): String {
+        if (this::chessPiece.isInitialized) {
+            return chessPiece.value + "─"
+        }
+
         return when {
             rowIndex == 0 && columnIndex in 1 until 9 -> "┬─"
             rowIndex == 9 && columnIndex in 1 until 9 -> "┴─"
@@ -15,4 +23,14 @@ class Point(val rowIndex:Int, val columnIndex:Int) {
         }
     }
 
+    fun setChessPiece(chessPiece: ChessPiece) {
+        this.chessPiece = chessPiece
+    }
+
+    fun getChesssPiece(): ChessPiece? {
+        if (this::chessPiece.isInitialized) {
+            return chessPiece
+        }
+        return null
+    }
 }

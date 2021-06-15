@@ -18,4 +18,17 @@ class Gobang(val row: Int, val column: Int) {
         }
         return rowHeader + "\n" + content
     }
+
+    fun setChessPiece(rowIndex: Int, columnIndex: Int) {
+        val point = points.first{ it.rowIndex == rowIndex && it.columnIndex == columnIndex}
+        val chessPiece = getNeedInputChessPiece()
+        point.setChessPiece(chessPiece)
+    }
+
+    private fun getNeedInputChessPiece(): ChessPiece {
+        val chessPieces = points.filter { it -> it.getChesssPiece() != null }
+        var blackCount = chessPieces.filter { it.getChesssPiece() == ChessPiece.BLACK }.count()
+        var whiteCount = chessPieces.filter { it.getChesssPiece() == ChessPiece.WHITE }.count()
+        return if (blackCount == whiteCount) ChessPiece.BLACK else ChessPiece.WHITE
+    }
 }

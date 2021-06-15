@@ -1,9 +1,7 @@
 package com.eason.gobang
 
-class Point(val rowIndex: Int, val columnIndex: Int) {
-
-    private lateinit var chessPiece: ChessPiece
-
+class Point(val rowIndex:Int, val columnIndex:Int) {
+    private lateinit var chessPiece:ChessPiece
 
     fun getPointName(): String {
         if (this::chessPiece.isInitialized) {

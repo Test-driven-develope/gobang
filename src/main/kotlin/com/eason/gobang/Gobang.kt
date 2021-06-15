@@ -18,7 +18,6 @@ class Gobang(val row: Int, val column: Int) {
         }
         return rowHeader + "\n" + content
     }
-
     fun setChessPiece(rowIndex: Int, columnIndex: Int) {
         val point = points.first{ it.rowIndex == rowIndex && it.columnIndex == columnIndex}
         val chessPiece = getNeedInputChessPiece()

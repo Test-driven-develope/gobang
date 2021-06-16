@@ -24,10 +24,14 @@ class Gobang(val row: Int, val column: Int) {
         point.setChessPiece(chessPiece)
     }
 
-    private fun getNeedInputChessPiece(): ChessPiece {
+    fun getNeedInputChessPiece(): ChessPiece {
         val chessPieces = points.filter { it -> it.getChesssPiece() != null }
         var blackCount = chessPieces.filter { it.getChesssPiece() == ChessPiece.BLACK }.count()
         var whiteCount = chessPieces.filter { it.getChesssPiece() == ChessPiece.WHITE }.count()
         return if (blackCount == whiteCount) ChessPiece.BLACK else ChessPiece.WHITE
+    }
+
+    fun isOver(): Boolean {
+        TODO("Not yet implemented")
     }
 }

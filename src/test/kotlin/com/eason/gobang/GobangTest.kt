@@ -62,4 +62,61 @@ internal class GobangTest {
         val chessBoard = gobang.getChessBoard()
         assertEquals(except, chessBoard)
     }
+
+    @Test
+    fun should_return_true_when_five_continuous_chess_pieces() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(2, 3)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(2, 4)
+        gobang.setChessPiece(3, 4)
+        gobang.setChessPiece(2, 5)
+        val over = gobang.isOver()
+        assertTrue(over)
+    }
+
+    @Test
+    fun should_return_false_when_three_continuous_chess_pieces() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(2, 3)
+        val over = gobang.isOver()
+        assertFalse(over)
+    }
+
+    @Test
+    fun should_return_false_when_five_not_continuous_chess_pieces() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(2, 3)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(2, 4)
+        gobang.setChessPiece(3, 4)
+        gobang.setChessPiece(2, 8)
+        val over = gobang.isOver()
+        assertFalse(over)
+    }
+
+    @Test
+    fun should_return_false_when_five_across_chess_pieces() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(2, 3)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(2, 4)
+        gobang.setChessPiece(2, 5)
+        gobang.setChessPiece(2, 8)
+        val over = gobang.isOver()
+        assertFalse(over)
+    }
+
 }

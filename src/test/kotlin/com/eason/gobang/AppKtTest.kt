@@ -72,6 +72,7 @@ pass
         System.setIn(stream)
         startGame(gobang, reader)
         Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
+        verify(reader, times(2)).nextLine()
     }
 
     @Test

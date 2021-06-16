@@ -119,4 +119,10 @@ internal class GobangTest {
         assertFalse(over)
     }
 
+    @Test
+    fun should_return_false_when_gobang_init() {
+        val over = gobang.isOver()
+        assertFalse(over)
+    }
+
 }

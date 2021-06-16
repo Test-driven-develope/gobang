@@ -31,7 +31,7 @@ class Gobang(private val row: Int, private val column: Int) {
     }
 
     fun isOver(): Boolean {
-        val columnIndex = points.filter { it.rowIndex == currentPoint.rowIndex && it.getChesssPiece() != null && it.getChesssPiece() == currentPoint.getChesssPiece() }.map { it.columnIndex }.toList().sorted()
+        val columnIndex = points.filter { it.getChesssPiece() != null && it.rowIndex == currentPoint.rowIndex && it.getChesssPiece() == currentPoint.getChesssPiece() }.map { it.columnIndex }.toList().sorted()
         if (columnIndex.size < 5) return false
         for (index in columnIndex) {
             if (index + 4 < column && columnIndex.containsAll((index until (index + 5)).toList())) {

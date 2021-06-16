@@ -7,6 +7,25 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class GobangTest {
 
+    private val gobang = Gobang(10, 10)
+
+    @Test
+    fun should_get_init_chess_board() {
+        val except = """  0 1 2 3 4 5 6 7 8 9
+0 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┐
+1 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+2 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+3 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+4 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+5 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+6 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+7 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+8 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
+9 └─┴─┴─┴─┴─┴─┴─┴─┴─┘"""
+        val actual = gobang.getChessBoard()
+        assertEquals(except, actual)
+    }
+
     @Test
     fun should_print_black_piece_in_chess_board() {
         val except = """  0 1 2 3 4 5 6 7 8 9
@@ -20,7 +39,6 @@ internal class GobangTest {
 7 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
 8 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
 9 └─┴─┴─┴─┴─┴─┴─┴─┴─┘""".trimIndent()
-        val gobang = Gobang(10, 10)
         gobang.setChessPiece(2, 2)
         val chessBoard = gobang.getChessBoard()
         assertEquals(except, chessBoard)
@@ -39,7 +57,6 @@ internal class GobangTest {
 7 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
 8 ├─┼─┼─┼─┼─┼─┼─┼─┼─┤
 9 └─┴─┴─┴─┴─┴─┴─┴─┴─┘""".trimIndent()
-        val gobang = Gobang(10, 10)
         gobang.setChessPiece(2, 2)
         gobang.setChessPiece(3, 3)
         val chessBoard = gobang.getChessBoard()

@@ -1,6 +1,5 @@
 package com.eason.gobang
 
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -74,8 +73,8 @@ internal class GobangTest {
         gobang.setChessPiece(2, 4)
         gobang.setChessPiece(3, 4)
         gobang.setChessPiece(2, 5)
-        val over = gobang.isOver()
-        assertTrue(over)
+        val win = gobang.isWin()
+        assertTrue(win)
     }
 
     @Test
@@ -85,8 +84,8 @@ internal class GobangTest {
         gobang.setChessPiece(2,2)
         gobang.setChessPiece(3, 2)
         gobang.setChessPiece(2, 3)
-        val over = gobang.isOver()
-        assertFalse(over)
+        val win = gobang.isWin()
+        assertFalse(win)
     }
 
     @Test
@@ -100,8 +99,8 @@ internal class GobangTest {
         gobang.setChessPiece(2, 4)
         gobang.setChessPiece(3, 4)
         gobang.setChessPiece(2, 8)
-        val over = gobang.isOver()
-        assertFalse(over)
+        val win = gobang.isWin()
+        assertFalse(win)
     }
 
     @Test
@@ -115,8 +114,8 @@ internal class GobangTest {
         gobang.setChessPiece(2, 4)
         gobang.setChessPiece(2, 5)
         gobang.setChessPiece(2, 8)
-        val over = gobang.isOver()
-        assertFalse(over)
+        val win = gobang.isWin()
+        assertFalse(win)
     }
 
     @Test

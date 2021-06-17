@@ -1,6 +1,6 @@
 package com.eason.gobang
 
-class Point(val rowIndex:Int, val columnIndex:Int) {
+class Point(val rowIndex:Int, val columnIndex:Int, val name:String) {
     private lateinit var chessPiece:ChessPiece
 
     fun getPointName(): String {
@@ -8,17 +8,7 @@ class Point(val rowIndex:Int, val columnIndex:Int) {
             return "${chessPiece.value}${if (columnIndex == 9) "" else "─"}"
         }
 
-        return when {
-            rowIndex == 0 && columnIndex in 1 until 9 -> "┬─"
-            rowIndex == 9 && columnIndex in 1 until 9 -> "┴─"
-            columnIndex == 0 && rowIndex in 1 until 9 -> "├─"
-            columnIndex == 9 && rowIndex in 1 until 9 -> "┤"
-            rowIndex == 0 && columnIndex == 0 -> "┌─"
-            rowIndex == 9 && columnIndex == 0 -> "└─"
-            rowIndex == 0 && columnIndex == 9 -> "┐"
-            rowIndex == 9 && columnIndex == 9 -> "┘"
-            else -> "┼─"
-        }
+        return name
     }
 
     fun setChessPiece(chessPiece: ChessPiece) {

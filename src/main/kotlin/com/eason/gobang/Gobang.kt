@@ -7,7 +7,18 @@ class Gobang(private val row: Int, private val column: Int) {
     init {
         for (rowIndex in 0 until row) {
             for (columnIndex in 0 until column) {
-                points.add(Point(rowIndex, columnIndex))
+                val point = when {
+                    rowIndex == 0 && columnIndex in 1 until row - 1 -> Point(rowIndex, columnIndex, "┬─")
+                    rowIndex == 9 && columnIndex in 1 until row - 1 -> Point(rowIndex, columnIndex, "┴─")
+                    columnIndex == 0 && rowIndex in 1 until column - 1 -> Point(rowIndex, columnIndex, "├─")
+                    columnIndex == 9 && rowIndex in 1 until column - 1 -> Point(rowIndex, columnIndex, "┤")
+                    rowIndex == 0 && columnIndex == 0 -> Point(rowIndex, columnIndex, "┌─")
+                    rowIndex == 9 && columnIndex == 0 -> Point(rowIndex, columnIndex, "└─")
+                    rowIndex == 0 && columnIndex == row - 1 -> Point(rowIndex, columnIndex, "┐")
+                    rowIndex == 9 && columnIndex == row - 1 -> Point(rowIndex, columnIndex, "┘")
+                    else -> Point(rowIndex, columnIndex, "┼─")
+                }
+                points.add(point)
             }
         }
     }
@@ -43,10 +54,14 @@ class Gobang(private val row: Int, private val column: Int) {
             points.filter { it.getChesssPiece() != null && it.getChesssPiece() == currentPoint.getChesssPiece() }
 
         return when {
-            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.rowIndex == currentPoint.rowIndex }.map { it.columnIndex }) -> true
-            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex == currentPoint.columnIndex }.map { it.rowIndex }) -> true
-            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex - it.rowIndex == currentPoint.columnIndex - currentPoint.rowIndex }.map { it.rowIndex }) -> true
-            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex + it.rowIndex == currentPoint.columnIndex + currentPoint.rowIndex }.map { it.rowIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.rowIndex == currentPoint.rowIndex }
+                .map { it.columnIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex == currentPoint.columnIndex }
+                .map { it.rowIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex - it.rowIndex == currentPoint.columnIndex - currentPoint.rowIndex }
+                .map { it.rowIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex + it.rowIndex == currentPoint.columnIndex + currentPoint.rowIndex }
+                .map { it.rowIndex }) -> true
             else -> false
         }
     }

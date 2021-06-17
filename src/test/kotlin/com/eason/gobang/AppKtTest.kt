@@ -39,6 +39,40 @@ pass
     }
 
     @Test
+    fun should_print_error_message_when_black_input_aaa_bbb() {
+        val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+pass
+请黑子(◉)输入行列坐标(如3,4):
+输入的坐标无效，请黑子(◉)重新输入正确的行列坐标(如3,4):""".trimIndent()
+        `when`(gobang.getChessBoard()).thenReturn("pass")
+        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isWin()).thenReturn(false)
+        `when`(reader.nextLine()).thenReturn("aaa,bbb")
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
+        val stream: InputStream = ByteArrayInputStream("aaa,bbb\r".encodeToByteArray())
+        System.setIn(stream)
+        startGame(gobang, reader)
+        Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
+    }
+
+    @Test
+    fun should_print_error_message_when_white_input_aaa_bbb() {
+        val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+pass
+请黑子(◉)输入行列坐标(如3,4):
+输入的坐标无效，请白子(◯)重新输入正确的行列坐标(如3,4):""".trimIndent()
+        `when`(gobang.getChessBoard()).thenReturn("pass")
+        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isWin()).thenReturn(false)
+        `when`(reader.nextLine()).thenReturn("aaa,bbb")
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE)
+        val stream: InputStream = ByteArrayInputStream("aaa,bbb\r".encodeToByteArray())
+        System.setIn(stream)
+        startGame(gobang, reader)
+        Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
+    }
+
+    @Test
     fun should_print_message_when_input_1_1() {
         val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
 pass
@@ -127,5 +161,47 @@ pass
         System.setIn(stream)
         startGame(gobang, reader)
         Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
+    }
+
+    @Test
+    fun should_return_1_1_when_input_1_1() {
+        val expect = Pair(1, 1)
+        val actual = parseInput("1,1")
+        Assertions.assertEquals(expect, actual)
+    }
+
+    @Test
+    fun should_throw_exception_when_input_1() {
+        Assertions.assertThrows(InputException::class.java){
+            parseInput("1")
+        }
+    }
+
+    @Test
+    fun should_throw_exception_when_input_aaa_bbb() {
+        Assertions.assertThrows(InputException::class.java){
+            parseInput("aaa,bbb")
+        }
+    }
+
+    @Test
+    fun should_throw_exception_when_input_30_40() {
+        Assertions.assertThrows(InputException::class.java){
+            parseInput("30,40")
+        }
+    }
+
+    @Test
+    fun should_throw_exception_when_input_negative() {
+        Assertions.assertThrows(InputException::class.java){
+            parseInput("-3,4")
+        }
+    }
+
+    @Test
+    fun should_throw_exception_when_input_other_comma() {
+        Assertions.assertThrows(InputException::class.java){
+            parseInput("1，1")
+        }
     }
 }

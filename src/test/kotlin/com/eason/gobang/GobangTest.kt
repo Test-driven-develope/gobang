@@ -295,4 +295,12 @@ internal class GobangTest {
         assertFalse(win)
     }
 
+    @Test
+    fun should_throw_input_exception_when_location_has_chess_piece() {
+        assertThrows(InputException::class.java) {
+            gobang.setChessPiece(1,1)
+            gobang.setChessPiece(1,1)
+        }
+    }
+
 }

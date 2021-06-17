@@ -15,10 +15,10 @@ fun main() {
 fun startGame(gobang: Gobang, reader: Scanner) {
     println(
         """
-        欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
-        ${gobang.getChessBoard()}
-        请黑子(◉)输入行列坐标(如3,4):
-    """.trimIndent()
+欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+${gobang.getChessBoard()}
+请黑子(◉)输入行列坐标(如3,4):
+""".trimIndent()
     )
     while (!gobang.isOver()) {
         try {
@@ -39,6 +39,7 @@ fun startGame(gobang: Gobang, reader: Scanner) {
     }
 }
 
+@Throws(InputException::class)
 fun parseInput(input: String): Pair<Int, Int> {
     val coordinator = input.split(",")
     if (coordinator.size == 2) {

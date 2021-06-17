@@ -20,8 +20,10 @@ class Gobang(private val row: Int, private val column: Int) {
         return rowHeader + "\n" + content
     }
 
+    @Throws(InputException::class)
     fun setChessPiece(rowIndex: Int, columnIndex: Int) {
         val point = points.first { it.rowIndex == rowIndex && it.columnIndex == columnIndex }
+        if (point.getChesssPiece() != null) throw InputException("输入的坐标已经有棋子了!")
         point.setChessPiece(getNeedInputChessPiece())
         currentPoint = point
     }

@@ -37,10 +37,13 @@ class Gobang(private val row: Int, private val column: Int) {
     }
 
     fun isWin(): Boolean {
-        val columnIndexs =
-            points.filter { it.getChesssPiece() != null && it.rowIndex == currentPoint.rowIndex && it.getChesssPiece() == currentPoint.getChesssPiece() }
-                .map { it.columnIndex }
-        if (isExistingFiveContinuousNaturalNumbers(columnIndexs)) return true
-        return false
+        val chessPiecePoints =
+            points.filter { it.getChesssPiece() != null && it.getChesssPiece() == currentPoint.getChesssPiece() }
+
+        return when {
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.rowIndex == currentPoint.rowIndex }.map { it.columnIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex == currentPoint.columnIndex }.map { it.rowIndex }) -> true
+            else -> false
+        }
     }
 }

@@ -9,9 +9,11 @@ fun main() {
 }
 
 fun startGame(gobang: Gobang, reader: Scanner) {
-    println("欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):")
-    println(gobang.getChessBoard())
-    println("请黑子(◉)输入行列坐标(如3,4):")
+    println("""
+        欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+        ${gobang.getChessBoard()}
+        请黑子(◉)输入行列坐标(如3,4):
+    """.trimIndent())
     while (!gobang.isOver()) {
         val coordinate = reader.nextLine()
         gobang.setChessPiece(coordinate.split(",")[0].toInt(), coordinate.split(",")[1].toInt())

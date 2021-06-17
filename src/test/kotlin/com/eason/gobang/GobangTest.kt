@@ -124,4 +124,60 @@ internal class GobangTest {
         assertFalse(over)
     }
 
+    @Test
+    fun should_return_true_when_five_continuous_chess_pieces_in_vertical() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(4, 1)
+        gobang.setChessPiece(4, 2)
+        gobang.setChessPiece(5, 1)
+        gobang.setChessPiece(5, 2)
+        gobang.setChessPiece(6, 1)
+        val win = gobang.isWin()
+        assertTrue(win)
+    }
+
+    @Test
+    fun should_return_false_when_thre_continuous_chess_pieces_in_vertical() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(4, 1)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
+    @Test
+    fun should_return_false_when_five_not_continuous_chess_pieces_in_vertical() {
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 2)
+        gobang.setChessPiece(4, 1)
+        gobang.setChessPiece(4, 2)
+        gobang.setChessPiece(5, 1)
+        gobang.setChessPiece(5, 2)
+        gobang.setChessPiece(7, 1)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
+    @Test
+    fun should_return_false_when_white_and_black_chess_pieces_in_vertical() {
+        gobang.setChessPiece(1, 1)
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(4,1)
+        gobang.setChessPiece(5, 1)
+        gobang.setChessPiece(6, 1)
+        gobang.setChessPiece(7, 1)
+        gobang.setChessPiece(8, 1)
+        gobang.setChessPiece(9, 1)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
 }

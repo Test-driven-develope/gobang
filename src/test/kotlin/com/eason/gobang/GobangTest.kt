@@ -180,4 +180,62 @@ internal class GobangTest {
         assertFalse(win)
     }
 
+    @Test
+    fun should_return_true_when_black_chess_pieces_are_five_continuous_in_backslash() {
+        gobang.setChessPiece(1, 1)
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(4, 1)
+        gobang.setChessPiece(4, 4)
+        gobang.setChessPiece(5, 1)
+        gobang.setChessPiece(5, 5)
+        val win = gobang.isWin()
+        assertTrue(win)
+    }
+
+    @Test
+    fun should_return_false_when_black_chess_pieces_are_three_continuous_in_backslash() {
+        gobang.setChessPiece(1, 1)
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 3)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
+    @Test
+    fun should_return_false_when_black_chess_pieces_are_five_not_continuous_in_backslash() {
+        gobang.setChessPiece(1, 1)
+        gobang.setChessPiece(2,1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3,1)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(4, 1)
+        gobang.setChessPiece(4, 4)
+        gobang.setChessPiece(5, 1)
+        gobang.setChessPiece(6, 6)
+        gobang.setChessPiece(6, 1)
+        gobang.setChessPiece(7, 7)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
+    @Test
+    fun should_return_false_when_black_or_white_chess_pieces_are_five_not_continuous_in_backslash() {
+        gobang.setChessPiece(1, 1)
+        gobang.setChessPiece(2,2)
+        gobang.setChessPiece(3, 3)
+        gobang.setChessPiece(4, 4)
+        gobang.setChessPiece(5, 5)
+        gobang.setChessPiece(6, 6)
+        gobang.setChessPiece(7, 7)
+        gobang.setChessPiece(8, 8)
+        gobang.setChessPiece(9, 9)
+        val win = gobang.isWin()
+        assertFalse(win)
+    }
+
 }

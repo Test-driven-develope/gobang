@@ -43,6 +43,7 @@ class Gobang(private val row: Int, private val column: Int) {
         return when {
             isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.rowIndex == currentPoint.rowIndex }.map { it.columnIndex }) -> true
             isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex == currentPoint.columnIndex }.map { it.rowIndex }) -> true
+            isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.columnIndex - it.rowIndex == currentPoint.columnIndex - currentPoint.rowIndex }.map { it.rowIndex }) -> true
             else -> false
         }
     }

@@ -27,15 +27,19 @@ internal class AppKtTest {
     fun should_print_message_when_input_enter() {
         val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
 pass
-请黑子(◉)输入行列坐标(如3,4):""".trimIndent()
+请黑子(◉)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
-        `when`(gobang.isOver()).thenReturn(true)
+        `when`(gobang.isOver()).thenReturn(false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        val stream: InputStream = ByteArrayInputStream("\r".encodeToByteArray())
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
+        `when`(reader.nextLine()).thenReturn("1,1")
+        val stream: InputStream = ByteArrayInputStream("1,1\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
         Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
-        verify(reader, times(0)).nextLine()
+        verify(reader, times(1)).nextLine()
     }
 
     @Test
@@ -43,11 +47,13 @@ pass
         val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
 pass
 请黑子(◉)输入行列坐标(如3,4):
-输入的坐标无效，请黑子(◉)重新输入正确的行列坐标(如3,4):""".trimIndent()
+输入的坐标无效，请黑子(◉)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
-        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isOver()).thenReturn(false, false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        `when`(reader.nextLine()).thenReturn("aaa,bbb")
+        `when`(reader.nextLine()).thenReturn("aaa,bbb", "1,1")
         `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
         val stream: InputStream = ByteArrayInputStream("aaa,bbb\r".encodeToByteArray())
         System.setIn(stream)
@@ -60,12 +66,14 @@ pass
         val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
 pass
 请黑子(◉)输入行列坐标(如3,4):
-输入的坐标无效，请白子(◯)重新输入正确的行列坐标(如3,4):""".trimIndent()
+输入的坐标无效，请黑子(◉)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
-        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isOver()).thenReturn(false, false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        `when`(reader.nextLine()).thenReturn("aaa,bbb")
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE)
+        `when`(reader.nextLine()).thenReturn("aaa,bbb", "1,1")
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
         val stream: InputStream = ByteArrayInputStream("aaa,bbb\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
@@ -77,13 +85,13 @@ pass
         val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
 pass
 请黑子(◉)输入行列坐标(如3,4):
-输入的坐标无效，请白子(◯)重新输入正确的行列坐标(如3,4):""".trimIndent()
+输入的坐标已经有棋子了! 棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
         `when`(gobang.isOver()).thenReturn(false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        `when`(gobang.setChessPiece(1,1)).thenThrow(InputException::class.java)
+        `when`(gobang.setChessPiece(1, 1)).thenThrow(InputException("输入的坐标已经有棋子了! "))
         `when`(reader.nextLine()).thenReturn("1,1")
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE)
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
         val stream: InputStream = ByteArrayInputStream("1,1\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
@@ -96,17 +104,19 @@ pass
 pass
 请黑子(◉)输入行列坐标(如3,4):
 pass
-请白子(◯)输入行列坐标(如3,4):""".trimIndent()
+请白子(◯)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
-        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isOver()).thenReturn(false, false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE)
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK, ChessPiece.WHITE)
         `when`(reader.nextLine()).thenReturn("1,1")
         val stream: InputStream = ByteArrayInputStream("1,1\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
         Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
-        verify(reader, times(1)).nextLine()
+        verify(reader, times(2)).nextLine()
     }
 
     @Test
@@ -117,18 +127,38 @@ pass
 pass
 请白子(◯)输入行列坐标(如3,4):
 pass
-请黑子(◉)输入行列坐标(如3,4):""".trimIndent()
+请黑子(◉)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
-        `when`(gobang.isOver()).thenReturn(false, false, true)
+        `when`(gobang.isOver()).thenReturn(false, false, false, true)
         `when`(gobang.isWin()).thenReturn(false)
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE, ChessPiece.BLACK)
-        `when`(reader.nextLine()).thenReturn("1,1", "2,2")
-        val stream: InputStream = ByteArrayInputStream("1,1\r2,2\r".encodeToByteArray())
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK, ChessPiece.WHITE, ChessPiece.BLACK)
+        `when`(reader.nextLine()).thenReturn("1,1", "2,2", "3,3")
+        val stream: InputStream = ByteArrayInputStream("1,1\r2,2\r3,3\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
         Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
-        verify(reader, times(2)).nextLine()
+        verify(reader, times(3)).nextLine()
     }
+
+    @Test
+    fun should_print_tie_message_when_input_enter() {
+        val expect = """欢迎来到五子连珠小游戏，分为黑子(◉)和白子(◯):
+pass
+请黑子(◉)输入行列坐标(如3,4):
+pass
+棋盘已经沾满,未分胜负,请重新开始一局吧!""".trimIndent()
+        `when`(gobang.getChessBoard()).thenReturn("pass")
+        `when`(gobang.isOver()).thenReturn(false, true)
+        `when`(gobang.isWin()).thenReturn(false)
+        `when`(reader.nextLine()).thenReturn("1,1")
+        val stream: InputStream = ByteArrayInputStream("1,1\r".encodeToByteArray())
+        System.setIn(stream)
+        startGame(gobang, reader)
+        Assertions.assertEquals(expect, outputStreamCaptor.toString().trim())
+    }
+
 
     @Test
     fun gobang_should_receive_coordinate() {
@@ -152,7 +182,7 @@ pass
 💥💥💥💥💥游戏结束，恭喜黑子(◉)获胜!💥💥💥💥💥""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
         `when`(gobang.isOver()).thenReturn(false, true)
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE)
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK)
         `when`(reader.nextLine()).thenReturn("1,1")
         `when`(gobang.isWin()).thenReturn(true)
         val stream: InputStream = ByteArrayInputStream("1,1\r".encodeToByteArray())
@@ -172,9 +202,9 @@ pass
 💥💥💥💥💥游戏结束，恭喜白子(◯)获胜!💥💥💥💥💥""".trimIndent()
         `when`(gobang.getChessBoard()).thenReturn("pass")
         `when`(gobang.isOver()).thenReturn(false, false, true)
-        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.WHITE, ChessPiece.BLACK)
+        `when`(gobang.getNeedInputChessPiece()).thenReturn(ChessPiece.BLACK, ChessPiece.WHITE)
         `when`(reader.nextLine()).thenReturn("1,1")
-        `when`(gobang.isWin()).thenReturn(false, true)
+        `when`(gobang.isWin()).thenReturn(true)
         val stream: InputStream = ByteArrayInputStream("1,1\r2,2\r".encodeToByteArray())
         System.setIn(stream)
         startGame(gobang, reader)
@@ -190,35 +220,35 @@ pass
 
     @Test
     fun should_throw_exception_when_input_1() {
-        Assertions.assertThrows(InputException::class.java){
+        Assertions.assertThrows(InputException::class.java) {
             parseInput("1")
         }
     }
 
     @Test
     fun should_throw_exception_when_input_aaa_bbb() {
-        Assertions.assertThrows(InputException::class.java){
+        Assertions.assertThrows(InputException::class.java) {
             parseInput("aaa,bbb")
         }
     }
 
     @Test
     fun should_throw_exception_when_input_30_40() {
-        Assertions.assertThrows(InputException::class.java){
+        Assertions.assertThrows(InputException::class.java) {
             parseInput("30,40")
         }
     }
 
     @Test
     fun should_throw_exception_when_input_negative() {
-        Assertions.assertThrows(InputException::class.java){
+        Assertions.assertThrows(InputException::class.java) {
             parseInput("-3,4")
         }
     }
 
     @Test
     fun should_throw_exception_when_input_other_comma() {
-        Assertions.assertThrows(InputException::class.java){
+        Assertions.assertThrows(InputException::class.java) {
             parseInput("1，1")
         }
     }

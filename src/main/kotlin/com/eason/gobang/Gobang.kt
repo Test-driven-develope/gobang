@@ -23,7 +23,7 @@ class Gobang(private val row: Int, private val column: Int) {
     @Throws(InputException::class)
     fun setChessPiece(rowIndex: Int, columnIndex: Int) {
         val point = points.first { it.rowIndex == rowIndex && it.columnIndex == columnIndex }
-        if (point.getChesssPiece() != null) throw InputException("输入的坐标已经有棋子了!")
+        if (point.getChesssPiece() != null) throw InputException("输入的坐标已经有棋子了! ")
         point.setChessPiece(getNeedInputChessPiece())
         currentPoint = point
     }
@@ -35,7 +35,7 @@ class Gobang(private val row: Int, private val column: Int) {
     }
 
     fun isOver(): Boolean {
-        return isWin()
+        return isWin() || points.filter { point -> point.getChesssPiece() != null }.count() == row * column
     }
 
     fun isWin(): Boolean {

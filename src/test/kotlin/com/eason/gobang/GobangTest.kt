@@ -303,4 +303,47 @@ internal class GobangTest {
         }
     }
 
+    @Test
+    fun should_over_when_no_left_points() {
+        for (rowIndex in 0 until 10) {
+            for (columnIndex in 0 until 3) {
+                gobang.setChessPiece(rowIndex, columnIndex)
+            }
+        }
+
+        for (rowIndex in 0 until 10) {
+            gobang.setChessPiece(rowIndex, 3)
+        }
+
+        for (rowIndex in 9 downTo 0) {
+            for (columnIndex in 4 until 7) {
+                gobang.setChessPiece(rowIndex, columnIndex)
+            }
+        }
+
+        for (rowIndex in 9 downTo 0) {
+            for (columnIndex in 7 until 10) {
+                gobang.setChessPiece(rowIndex, columnIndex)
+            }
+        }
+        val except = """
+  0 1 2 3 4 5 6 7 8 9
+0 ◉─◯─◉─◉─◯─◉─◯─◯─◉─◯
+1 ◯─◉─◯─◯─◉─◯─◉─◉─◯─◉
+2 ◉─◯─◉─◉─◯─◉─◯─◯─◉─◯
+3 ◯─◉─◯─◯─◉─◯─◉─◉─◯─◉
+4 ◉─◯─◉─◉─◯─◉─◯─◯─◉─◯
+5 ◯─◉─◯─◯─◉─◯─◉─◉─◯─◉
+6 ◉─◯─◉─◉─◯─◉─◯─◯─◉─◯
+7 ◯─◉─◯─◯─◉─◯─◉─◉─◯─◉
+8 ◉─◯─◉─◉─◯─◉─◯─◯─◉─◯
+9 ◯─◉─◯─◯─◉─◯─◉─◉─◯─◉
+        """.trimIndent()
+        val actual = gobang.getChessBoard()
+        val isOver = gobang.isOver()
+        assertTrue(isOver)
+        assertEquals(except, actual)
+
+    }
+
 }

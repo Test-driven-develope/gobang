@@ -25,7 +25,7 @@ class Gobang(private val row: Int, private val column: Int) {
 
     fun getChessBoard(): String {
         val rowHeader = (0 until column).toList().joinToString(prefix = "  ", separator = " ")
-        val content = points.groupBy { it.rowIndex }.toList().joinToString(separator = "\n") {
+        val content = points.groupBy { it.rowIndex }.toList().joinToString(separator = "\n") { it ->
             "${it.first} ${it.second.toList().joinToString(separator = "") { it.getPointName() }}"
         }
         return rowHeader + "\n" + content
@@ -33,25 +33,24 @@ class Gobang(private val row: Int, private val column: Int) {
 
     @Throws(InputException::class)
     fun setChessPiece(rowIndex: Int, columnIndex: Int) {
-        val point = points.first { it.rowIndex == rowIndex && it.columnIndex == columnIndex }
-        if (point.getChesssPiece() != null) throw InputException("输入的坐标已经有棋子了! ")
-        point.setChessPiece(getNeedInputChessPiece())
-        currentPoint = point
+        currentPoint = points.first { it.rowIndex == rowIndex && it.columnIndex == columnIndex }
+        if (currentPoint.getChessPiece() != null) throw InputException("输入的坐标已经有棋子了! ")
+        currentPoint.setChessPiece(getNeedInputChessPiece())
     }
 
     fun getNeedInputChessPiece(): ChessPiece {
         val chessPiecesMap =
-            points.mapNotNull { it.getChesssPiece() }.groupBy { it.value }.map { it.key to it.value.size }.toMap()
-        return if (chessPiecesMap.get(ChessPiece.BLACK.value) == chessPiecesMap.get(ChessPiece.WHITE.value)) ChessPiece.BLACK else ChessPiece.WHITE
+            points.mapNotNull { it.getChessPiece() }.groupBy { it.value }.map { it.key to it.value.size }.toMap()
+        return if (chessPiecesMap[ChessPiece.BLACK.value] == chessPiecesMap[ChessPiece.WHITE.value]) ChessPiece.BLACK else ChessPiece.WHITE
     }
 
     fun isOver(): Boolean {
-        return isWin() || points.filter { point -> point.getChesssPiece() != null }.count() == row * column
+        return isWin() || points.filter { point -> point.getChessPiece() != null }.count() == row * column
     }
 
     fun isWin(): Boolean {
         val chessPiecePoints =
-            points.filter { it.getChesssPiece() != null && it.getChesssPiece() == currentPoint.getChesssPiece() }
+            points.filter { it.getChessPiece() != null && it.getChessPiece() == currentPoint.getChessPiece() }
 
         return when {
             isExistingFiveContinuousNaturalNumbers(chessPiecePoints.filter { it.rowIndex == currentPoint.rowIndex }
